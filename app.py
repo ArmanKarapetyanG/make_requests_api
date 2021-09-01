@@ -41,7 +41,7 @@ class ParseLink(Resource):
             "hl": "ru",
             "gl": "ru",
             "api_key": "df88d3ff9457c1010b4081ea4eb67f1f5b1fa2f544164e81267e472681f69e93",
-            "num": 100
+            "num": 30
         }
 
         search = GoogleSearch(params)
@@ -58,7 +58,7 @@ class ParseLink(Resource):
         urls = []
         for i in organic_results:
             urls.append(i['link'])
-        with ThreadPoolExecutor(max_workers=5) as executor:
+        with ThreadPoolExecutor(max_workers=40) as executor:
             future_to_files = {executor.submit(make_reqs, url): url for url in urls}
         ret_d = sorted(datas, key = lambda i: i['price'])
         if len(ret_d) >= 3:

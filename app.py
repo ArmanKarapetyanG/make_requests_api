@@ -29,11 +29,6 @@ def make_reqs(link):
         pass
 
 class ParseLink(Resource):
-    def get(self):
-        data = pd.read_csv('cleanest_max.csv')  # read CSV
-        data = {'allowed hosts': list(data['host'])}
-        return {'data': data}, 200
-
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('query', required=True)

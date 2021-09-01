@@ -21,9 +21,12 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 datas = []
 
 def make_reqs(link):
-    data = requests.post('https://api-price-parse-v1.herokuapp.com/api/v1/parser', params=({'url': link}), verify=False).json()['price']
-    if data > 0:
-        datas.append({'link': link, 'price': data})
+    try:
+        data = requests.post('https://api-price-parse-v1.herokuapp.com/api/v1/parser', params=({'url': link}), verify=False).json()['price']
+        if data > 0:
+            datas.append({'link': link, 'price': data})
+    except:
+        pass
 
 class ParseLink(Resource):
     def get(self):

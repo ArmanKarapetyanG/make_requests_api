@@ -43,12 +43,20 @@ class ParseLink(Resource):
             "hl": "ru",
             "gl": "ru",
             "api_key": "df88d3ff9457c1010b4081ea4eb67f1f5b1fa2f544164e81267e472681f69e93",
-            "num": 30
+            "num": 100
         }
 
         search = GoogleSearch(params)
         results = search.get_dict()
         organic_results = results['organic_results']
+        inline_shoping = results.get('shopping_results')
+        if inline_shoping:
+            for i in inline_shoping:
+                datas.append({
+                    'link': i['link'],
+                    'price': i['extracted_price']
+                })
+
         urls = []
         for i in organic_results:
             urls.append(i['link'])

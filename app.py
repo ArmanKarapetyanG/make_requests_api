@@ -22,7 +22,7 @@ datas = []
 
 def make_reqs(link):
     try:
-        data = requests.post('https://api-price-parse-v1.herokuapp.com/api/v1/parser', params=({'url': link}), verify=False).json()['price']
+        data = requests.post('https://api-price-parse-v1.herokuapp.com/api/v1/parser', params=({'url': link}), verify=False, timeout=15).json()['price']
         if data > 0:
             datas.append({'link': link, 'price': data})
     except:
@@ -63,7 +63,7 @@ class ParseLink(Resource):
         urls = []
         for i in organic_results:
             urls.append(i['link'])
-        with ThreadPoolExecutor(max_workers=100) as executor:
+        with ThreadPoolExecutor(max_workers=5) as executor:
             future_to_files = {executor.submit(make_reqs, url): url for url in urls}
         ret_d = sorted(datas, key = lambda i: i['price'])
         if len(ret_d) >= 3:

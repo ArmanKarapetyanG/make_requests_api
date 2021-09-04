@@ -62,9 +62,11 @@ class ParseLink(Resource):
         with ThreadPoolExecutor(max_workers=40) as executor:
             future_to_files = {executor.submit(make_reqs, url): url for url in urls}
         data_to_return = sorted(datas, key=lambda i: i['price'])
+        length_to_mean = int(len(data_to_return))          
         if len(data_to_return) > 3:
-            print(data_to_return)
-            return {"data": data_to_return}, 200
+            data = [data_to_return[length_to_mean - 2], data_to_return[length_to_mean-1], data_to_return[length_to_mean]]
+            print(data)
+            return {"data": data}, 200
         else:
             return {"data": "Not enough data to analyse..."}, 400
 

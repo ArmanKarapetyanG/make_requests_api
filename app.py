@@ -61,18 +61,8 @@ class ParseLink(Resource):
             urls.append(i['link'])
         with ThreadPoolExecutor(max_workers=40) as executor:
             future_to_files = {executor.submit(make_reqs, url): url for url in urls}
-        ret_d = sum([i['price']for i in datas])/len(datas)
-        data_to_return = []
-        for i in datas:
-            i['mean_val'] = i['price'] - ret_d
-            data_to_return.append(i)
-        data_to_return = sorted(data_to_return, key=lambda i: i['mean_val'])
-        while len(data_to_return) !=3:
-            data_to_return = data_to_return.pop(0)
-            if len(data_to_return) > 3:
-                data_to_return = data_to_return.pop(-1)
-        print(data_to_return)
-        if len(data_to_return) == 3:
+        data_to_return = sorted(datas, key=lambda i: i['price'])
+        if len(data_to_return) > 3:
             print(data_to_return)
             return {"data": data_to_return}, 200
         else:

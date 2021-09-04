@@ -63,6 +63,7 @@ class ParseLink(Resource):
         ret_d = sorted(datas, key = lambda i: i['price'])
         if len(ret_d) >= 3:
             data = [ret_d[0], ret_d[1],ret_d[2]]
+            print(data)
             return {"data": data}, 200
         else:
             return {"data": "Not enough data to analyse..."}, 400

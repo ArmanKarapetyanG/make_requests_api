@@ -69,7 +69,7 @@ class ParseLink(Resource):
                 if n >= length_to_mean - 2 and n <= length_to_mean:
                     clean_data.append(i)
             print(clean_data)
-            return clean_data, 200
+            return {"extracted_prices": clean_data}, 200
         else:
             return {"error": "Not enough data to analyse..."}, 400
 

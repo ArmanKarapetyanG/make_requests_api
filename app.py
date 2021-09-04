@@ -68,11 +68,12 @@ class ParseLink(Resource):
             data_to_return.append(i)
         data_to_return = sorted(data_to_return, key=lambda i: i['mean_val'])
         while len(data_to_return) !=3:
-            data_to_return.pop(0)
+            data_to_return = data_to_return.pop(0)
             if len(data_to_return) > 3:
-                data_to_return.pop(-1)
-            print(data_to_return)
-            return {"data": data_to_return}, 200
+                data_to_return = data_to_return.pop(-1)
+        data_to_return = [i.pop('mean', None) for i in data_to_return]
+        print(data_to_return)
+        return {"data": data_to_return}, 200
         else:
             return {"data": "Not enough data to analyse..."}, 400
 

@@ -11,6 +11,7 @@ from urllib.parse import urlparse
 from string import whitespace
 from concurrent.futures import ThreadPoolExecutor
 import validators
+from statistics import mean
 
 
 
@@ -60,8 +61,13 @@ class ParseLink(Resource):
             urls.append(i['link'])
         with ThreadPoolExecutor(max_workers=40) as executor:
             future_to_files = {executor.submit(make_reqs, url): url for url in urls}
-        ret_d = sorted(datas, key = lambda i: i['price'])
-        if len(ret_d) >= 3:
+        ret_d = mean([i['price']for i in datas])
+        data_to_return = []
+        for i in datas:
+            i['mean_val'] = i['price'] - ret_d
+            data_to_return.append(i)
+        data_to_return = sorted(data_to_return, key=lambda i: i['mean_val'])
+        if len(data_to_return) >= 3:
             data = [ret_d[0], ret_d[1],ret_d[2]]
             print(data)
             return {"data": data}, 200

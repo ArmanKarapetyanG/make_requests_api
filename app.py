@@ -61,7 +61,7 @@ class ParseLink(Resource):
             urls.append(i['link'])
         with ThreadPoolExecutor(max_workers=40) as executor:
             future_to_files = {executor.submit(make_reqs, url): url for url in urls}
-        ret_d = mean([i['price']for i in datas])
+        ret_d = sum([i['price']for i in datas])/len(datas)
         data_to_return = []
         for i in datas:
             i['mean_val'] = i['price'] - ret_d
@@ -71,10 +71,12 @@ class ParseLink(Resource):
             data_to_return = data_to_return.pop(0)
             if len(data_to_return) > 3:
                 data_to_return = data_to_return.pop(-1)
-        data_to_return = [i.pop('mean', None) for i in data_to_return]
-        if len(data_to_return) == 3:
-            print(data_to_return)
-            return {"data": data_to_return}, 200
+        d_ret = []
+        for i in data_to_return:
+            d_ret.append({'link': i['link'], 'price': i['price']})
+        if len(d_ret) == 3:
+            print(d_ret)
+            return {"data": d_ret}, 200
         else:
             return {"data": "Not enough data to analyse..."}, 400
 

@@ -72,9 +72,9 @@ class ParseLink(Resource):
             if len(data_to_return) > 3:
                 data_to_return = data_to_return.pop(-1)
         print(data_to_return)
-        if len(d_ret) == 3:
-            print(d_ret)
-            return {"data": d_ret}, 200
+        if len(data_to_return) == 3:
+            print(data_to_return)
+            return {"data": data_to_return}, 200
         else:
             return {"data": "Not enough data to analyse..."}, 400
 

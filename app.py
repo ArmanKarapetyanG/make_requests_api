@@ -22,7 +22,7 @@ datas = []
 
 def make_reqs(link):
     try:
-        data = requests.post('https://api-price-parse-v1.herokuapp.com/api/v1/parser', params=({'url': link}), verify=False, timeout=15).json()['price']
+        data = requests.post('https://api-price-parse-v1.herokuapp.com/api/v1/parser', params=({'url': link}), verify=False).json()['price']
         if data > 0:
             datas.append({'link': link, 'price': data})
     except:

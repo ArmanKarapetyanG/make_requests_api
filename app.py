@@ -71,6 +71,7 @@ class ParseLink(Resource):
             data_to_return = data_to_return.pop(0)
             if len(data_to_return) > 3:
                 data_to_return = data_to_return.pop(-1)
+        print(data_to_return)
         d_ret = []
         for i in data_to_return:
             d_ret.append({'link': i['link'], 'price': i['price']})

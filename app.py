@@ -82,4 +82,4 @@ class ParseLink(Resource):
 api.add_resource(ParseLink, '/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(threaded=True)
